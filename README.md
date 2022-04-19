@@ -8,8 +8,7 @@
 
  
 ## Tables 
-
-![Db](./assets/DB.png)
+![](./assets/Data.png)
 
 ## API
 ![](./assets/API.png)
