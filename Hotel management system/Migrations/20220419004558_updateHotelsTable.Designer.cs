@@ -3,14 +3,16 @@ using Hotel_management_system.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Hotel_management_system.Migrations
 {
     [DbContext(typeof(AsyncInnDbContext))]
-    partial class AsyncInnDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220419004558_updateHotelsTable")]
+    partial class updateHotelsTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -87,24 +89,21 @@ namespace Hotel_management_system.Migrations
                             ID = 1,
                             Address = "Amman",
                             Name = "Async Inn-Amman",
-                            Phone = "00962675355",
-                            State = "jordan"
+                            Phone = "00962675355"
                         },
                         new
                         {
                             ID = 2,
                             Address = "Aqapa",
                             Name = "Async Inn-Aqapa",
-                            Phone = "00962675353",
-                            State = "jordan"
+                            Phone = "00962675353"
                         },
                         new
                         {
                             ID = 3,
                             Address = "Deadsee",
                             Name = "Async Inn-Deadsee",
-                            Phone = "00962675351",
-                            State = "jordan"
+                            Phone = "00962675351"
                         });
                 });
 
