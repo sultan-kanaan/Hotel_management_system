@@ -31,9 +31,9 @@ namespace Hotel_management_system.Data
 
 
             modelBuilder.Entity<Hotel>()
-                .HasData(new Hotel { ID = 1, Name = "Async Inn-Amman", Address = "Amman", Phone = "00962675355"},
-                         new Hotel { ID = 2, Name = "Async Inn-Aqapa", Address = "Aqapa", Phone = "00962675353"},
-                         new Hotel { ID = 3, Name = "Async Inn-Deadsee",Address = "Deadsee", Phone = "00962675351"}
+                .HasData(new Hotel { ID = 1, Name = "Async Inn-Amman", Address = "Amman",State= "jordan", Phone = "00962675355"},
+                         new Hotel { ID = 2, Name = "Async Inn-Aqapa", Address = "Aqapa", State = "jordan", Phone = "00962675353"},
+                         new Hotel { ID = 3, Name = "Async Inn-Deadsee",Address = "Deadsee", State = "jordan", Phone = "00962675351"}
                          );
             modelBuilder.Entity<Room>()
                 .HasData(new Room { ID = 1, Name = "cozy studio", Layout = 0 },
