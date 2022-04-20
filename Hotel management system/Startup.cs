@@ -1,4 +1,6 @@
 using Hotel_management_system.Data;
+using Hotel_management_system.Models.Interfaces;
+using Hotel_management_system.Models.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -6,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Room_management_system.Models.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +30,10 @@ namespace Hotel_management_system
         {
             services.AddMvc();
             services.AddControllers();
+            services.AddTransient<IHotel, HotelRepository>();
+            services.AddTransient<IRoom, RoomRepository>();
+            services.AddTransient<IAmenity, AmenityRepository>();
+
 
             services.AddDbContext<AsyncInnDbContext>(options => {
                 // Our DATABASE_URL from js days
