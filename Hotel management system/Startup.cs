@@ -33,6 +33,7 @@ namespace Hotel_management_system
             services.AddTransient<IHotel, HotelRepository>();
             services.AddTransient<IRoom, RoomRepository>();
             services.AddTransient<IAmenity, AmenityRepository>();
+            services.AddTransient<IHotelRoom, HotelRoomRepository>();
 
 
             services.AddDbContext<AsyncInnDbContext>(options => {
