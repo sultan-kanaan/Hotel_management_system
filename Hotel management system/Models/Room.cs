@@ -13,8 +13,8 @@ namespace Hotel_management_system.Models
 
         //Navigation Properties 
 
-        public ICollection<HotelRoom> HotelRoom { get; set; }
-        public ICollection<RoomAmenities> RoomAmenities { get; set; }
+        public List<HotelRoom> HotelRoom { get; set; }
+        public List<RoomAmenities> RoomAmenities { get; set; }
     }
 
     public enum Layout

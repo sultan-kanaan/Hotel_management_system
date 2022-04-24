@@ -12,6 +12,6 @@ namespace Hotel_management_system.Models
 
         //Navigation Properties
 
-        public ICollection<RoomAmenities> RoomAmenities { get; set; }
+        public List<RoomAmenities> RoomAmenities { get; set; }
     }
 }
