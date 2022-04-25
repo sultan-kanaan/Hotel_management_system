@@ -32,13 +32,19 @@ namespace Hotel_management_system.Models.Services
 
         public async Task<List<Amenity>> GetAmenities()
         {
-            var amenity = await _context.Amenities.ToListAsync();
+            var amenity = await _context.Amenities.Include(a => a.RoomAmenities).ToListAsync();
             return amenity ;
         }
 
         public async Task<Amenity> GetAmenity(int Id)
         {
             Amenity amenity = await _context.Amenities.FindAsync(Id);
+            var roomAmenities = await _context.RoomAmenities
+                .Where(r => r.RoomID == Id)
+                .Include(a => a.Amenities)
+                .ThenInclude(a => a.RoomAmenities)
+                .ToListAsync();
+            amenity.RoomAmenities = roomAmenities;
             return amenity;
         }
 

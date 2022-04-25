@@ -24,6 +24,8 @@ namespace Hotel_management_system.Controllers
 
         // GET: api/HotelRooms
         [HttpGet]
+        [HttpGet("{hotelId}")]
+        [Route("Hotels/{hotelId}/Rooms")]
         public async Task<ActionResult<IEnumerable<HotelRoom>>> GetHotelRooms(int hotelId)
         {
             var hotelroom = await _HotelRoom.GetHotelRooms(hotelId);
@@ -80,10 +82,10 @@ namespace Hotel_management_system.Controllers
         //adds a room to a hotel
         [HttpPost]
         [Route("Hotels/{hotelId}/Rooms")]
-        public async Task<IActionResult> AddRoomToHotel(int hotelId, int roomId, int roomNumber, decimal rate, bool petFriendly)
+        public async Task<IActionResult> AddRoomToHotel(int hotelId, int roomId)
         {
-            await _HotelRoom.AddRoomToHotel(hotelId, roomId, roomNumber, rate, petFriendly);
-            await _HotelRoom.AddRoomToHotel(hotelId, roomId, roomNumber, rate, petFriendly);
+            await _HotelRoom.AddRoomToHotel(hotelId, roomId);
+            await _HotelRoom.AddRoomToHotel(hotelId, roomId);
             return NoContent();
         }
         //removes a room from a hotel
