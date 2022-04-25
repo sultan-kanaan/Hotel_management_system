@@ -16,15 +16,12 @@ namespace Hotel_management_system.Models.Services
         {
             _context = context;
         }
-        public async Task AddRoomToHotel(int roomId, int hotelId, int roomNumber, decimal rate, bool petFriendly)
+        public async Task AddRoomToHotel(int roomId, int hotelId)
         {
             HotelRoom HotelRoom = new HotelRoom()
             {
                 RoomID = roomId,
                 HotelID = hotelId,
-                RoomNumber = roomNumber,
-                Rate = rate,
-                PetFriendly = petFriendly,
                 Room = await _context.Rooms.FirstOrDefaultAsync(r => r.ID == roomId),
                 Hotel = await _context.Hotels.FirstOrDefaultAsync(h => h.ID == hotelId)
 

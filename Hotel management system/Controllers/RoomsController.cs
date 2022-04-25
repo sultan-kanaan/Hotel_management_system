@@ -71,7 +71,7 @@ namespace Hotel_management_system.Controllers
         }
         //Adds an amenity to a room
         [HttpPost]
-        [Route("{roomId}/Amenity/{amenityId}")]
+        [Route("{roomId}/{amenityId}")]
         public async Task<IActionResult> AddAmenityToRoom(int roomId, int amenityId)
         {
             await _room.AddAmenityToRoom(roomId, amenityId);
@@ -79,7 +79,7 @@ namespace Hotel_management_system.Controllers
         }
         //removes an amenity from a room
         [HttpDelete]
-        [Route("{roomId}/Amenity/{amenityId}")]
+        [Route("{roomId}/{amenityId}")]
         public async Task<IActionResult> DeleteAmenityFromRoom(int roomId, int amenityId)
         {
             await _room.RemoveAmentityFromRoom(roomId, amenityId);

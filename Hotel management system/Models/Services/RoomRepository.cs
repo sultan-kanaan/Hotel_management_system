@@ -40,6 +40,7 @@ namespace Room_management_system.Models.Services
             var roomAmenities = await _context.RoomAmenities
                 .Where(r => r.RoomID == Id)
                 .Include(a => a.Amenities)
+                .ThenInclude(a => a.RoomAmenities)
                 .ToListAsync();
 
             room.RoomAmenities = roomAmenities;
@@ -49,12 +50,13 @@ namespace Room_management_system.Models.Services
 
         public async Task<List<Room>> GetRooms()
         {
-            var rooms = await _context.Rooms.ToListAsync();
-            return rooms;
-
+            return await _context.Rooms
+                  .Include(ra => ra.RoomAmenities)
+                  .ThenInclude(hr => hr.Amenities)
+                  .ToListAsync();
         }
 
-       
+
         public async Task<Room> UpdateRoom(int ID,Room room)
         {
             _context.Entry(room).State = EntityState.Modified;
@@ -63,7 +65,7 @@ namespace Room_management_system.Models.Services
         }
         //logic to add and remove amenities from rooms
 
-        public async Task<Room> AddAmenityToRoom(int roomId, int amenityId)
+        public async Task AddAmenityToRoom(int roomId, int amenityId)
         {
             RoomAmenities roomAmenity = new RoomAmenities()
             {
@@ -74,16 +76,11 @@ namespace Room_management_system.Models.Services
             _context.Entry(roomAmenity).State = EntityState.Added;
 
             await _context.SaveChangesAsync();
-
-            var AddAmenity = await GetRoom(roomId);
-
-            return AddAmenity;
-
         }
 
         public async Task RemoveAmentityFromRoom(int roomId, int amenityId)
         {
-            RoomAmenities roomAmenities = await _context.RoomAmenities.Where(x => x.AmenitiesID == amenityId).FirstOrDefaultAsync();
+            RoomAmenities roomAmenities = await _context.RoomAmenities.Where(x => x.AmenitiesID == amenityId && x.RoomID == roomId).FirstOrDefaultAsync();
 
             _context.Entry(roomAmenities).State = EntityState.Deleted;
 

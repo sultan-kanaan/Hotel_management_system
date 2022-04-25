@@ -12,7 +12,7 @@ namespace Hotel_management_system.Models.Interfaces
         Task<List<Room>> GetRooms();
         Task<Room> UpdateRoom(int ID, Room room);
         Task DeleteRoom(int Id);
-        Task<Room> AddAmenityToRoom(int roomId, int amenityId);
+        Task AddAmenityToRoom(int roomId, int amenityId);
         Task RemoveAmentityFromRoom(int roomId, int amenityId);
 
     }
