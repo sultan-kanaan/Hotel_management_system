@@ -67,6 +67,8 @@
 
 ## API
 
+![](./assets/SW.png)
+
 ![](./assets/API.png)
 
 ![](./assets/APIRooms.png)
