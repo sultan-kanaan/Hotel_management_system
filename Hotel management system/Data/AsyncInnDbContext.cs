@@ -25,9 +25,7 @@ namespace Hotel_management_system.Data
        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //composite key associations
-            modelBuilder.Entity<HotelRoom>().HasKey(x => new { x.HotelID, x.RoomNumber });
-            modelBuilder.Entity<RoomAmenities>().HasKey(x => new { x.AmenitiesID, x.RoomID });
+           
 
 
             modelBuilder.Entity<Hotel>()
@@ -47,6 +45,11 @@ namespace Hotel_management_system.Data
                          new Amenity { ID = 3, Name = "ocean view" },
                          new Amenity { ID = 4, Name = "mini bar" }
                          );
+            modelBuilder.Entity<RoomAmenities>()
+                 .HasKey(RoomAmenity => new { RoomAmenity.RoomID, RoomAmenity.AmenitiesID });
+
+            modelBuilder.Entity<HotelRoom>()
+                        .HasKey(HotelRoomNumber => new { HotelRoomNumber.HotelID, HotelRoomNumber.RoomNumber });
         }
     }
 }

@@ -10,6 +10,7 @@ using Hotel_management_system.Models;
 
 namespace Hotel_management_system.Controllers
 {
+    [Produces("application/json")]
     [Route("api/[controller]")]
     [ApiController]
     public class RoomAmenitiesController : ControllerBase
