@@ -9,7 +9,9 @@
 
  Lab 13: Dependency Injection _ 20-4-2022
  
- Lab 14:  Navigation Properties & Routing _ 24-4-2022
+ Lab 14: Navigation Properties & Routing _ 24-4-2022
+ 
+ Lab 16: Data Transfer Objects (DTOs) _ 27-4-2022
 
 
 
