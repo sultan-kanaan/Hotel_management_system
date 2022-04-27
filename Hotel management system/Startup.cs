@@ -8,7 +8,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 using Room_management_system.Models.Services;
+using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,18 +30,29 @@ namespace Hotel_management_system
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            
             services.AddMvc();
+            
             services.AddControllers();
             services.AddTransient<IHotel, HotelRepository>();
             services.AddTransient<IRoom, RoomRepository>();
             services.AddTransient<IAmenity, AmenityRepository>();
             services.AddTransient<IHotelRoom, HotelRoomRepository>();
 
-
-            services.AddDbContext<AsyncInnDbContext>(options => {
+            
+            services.AddDbContext<AsyncInnDbContext>(options =>
+            {
                 // Our DATABASE_URL from js days
                 string connectionString = Configuration.GetConnectionString("DefaultConnection");
                 options.UseSqlServer(connectionString);
+            });
+            services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("V1", new OpenApiInfo()
+                {
+                    Title = "Hotel_management_system",
+                    Version = "V1"
+                });
             });
         }
 
@@ -50,12 +63,20 @@ namespace Hotel_management_system
             {
                 app.UseDeveloperExceptionPage();
             }
-
             app.UseRouting();
-            
+            app.UseSwagger(options => {
+                options.RouteTemplate = "/api/{documentName}/swagger.json";
+            });
+            app.UseSwaggerUI(options =>
+            {
+                options.SwaggerEndpoint("/api/V1/swagger.json", "Hotel_management_system");
+                options.RoutePrefix = "";
+            });
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+
 
                 endpoints.MapGet("/", async context =>
                 {

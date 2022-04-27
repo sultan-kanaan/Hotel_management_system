@@ -8,10 +8,13 @@ using Microsoft.EntityFrameworkCore;
 using Hotel_management_system.Data;
 using Hotel_management_system.Models;
 using Hotel_management_system.Models.Interfaces;
+using Hotel_management_system.Models.DTOs;
 
 namespace Hotel_management_system.Controllers
 {
-    [Route("api/[controller]")]
+    [Produces("application/json")]
+    //[Route("api/[controller]")]
+    [Route("/api/Hotels/{hotelId}/Rooms")]
     [ApiController]
     public class HotelRoomsController : ControllerBase
     {
@@ -24,35 +27,31 @@ namespace Hotel_management_system.Controllers
 
         // GET: api/HotelRooms
         [HttpGet]
-        [HttpGet("{hotelId}")]
-        [Route("Hotels/{hotelId}/Rooms")]
-        public async Task<ActionResult<IEnumerable<HotelRoom>>> GetHotelRooms(int hotelId)
+        public async Task<ActionResult<HotelRoomDTO>> GetHotelRoom()
         {
-            var hotelroom = await _HotelRoom.GetHotelRooms(hotelId);
-            return Ok(hotelroom);
+            return Ok(await _HotelRoom.GetHotelRooms());
+
+           
         }
 
         // GET: api/HotelRooms/5
-        [HttpGet]
-        [Route("Hotels/{hotelId}/Rooms/{roomNumber}")]
-
-        public async Task<ActionResult<HotelRoom>> GetHotelRoom(int hotelid, int roomNumber)
+        [HttpGet("{roomNumber}")]
+        public async Task<ActionResult<IEnumerable<HotelRoomDTO>>> GetHotelRooms(int hotelId, int roomNumber)
         {
-            var hotelroom = await _HotelRoom.GetHotelRoom(hotelid, roomNumber);
+            var hotelroom = await _HotelRoom.GetHotelRoom(hotelId, roomNumber);
 
             if (hotelroom == null)
             {
                 return NotFound();
             }
 
-            return hotelroom;
+            return Ok(hotelroom);
         }
 
         // PUT: api/HotelRooms/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        [Route("Hotels/{hotelId}/Rooms/{roomNumber}")]
-        public async Task<IActionResult> PutHotelRoom(HotelRoom hotelRoom)
+        [HttpPut("{roomNumber}")]
+        public async Task<IActionResult> PutHotelRoom(HotelRoomDTO hotelRoom)
         {
 
             var updatedHotelRoom = await _HotelRoom.UpdateHotelRoom(hotelRoom);
@@ -62,39 +61,20 @@ namespace Hotel_management_system.Controllers
         // POST: api/HotelRooms
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        [Route("Hotels/{hotelId}/Rooms")]
-        public async Task<ActionResult<HotelRoom>> PostHotelRoom(HotelRoom hotelRoom)
+        public async Task<ActionResult<HotelRoomDTO>> PostHotelRoom(HotelRoomDTO hotelRoom)
         {
-            await _HotelRoom.CreateHotelRoom(hotelRoom);
-            return CreatedAtAction("GetHotelRoom", new { Hotelid = hotelRoom.HotelID, RoomId = hotelRoom.RoomID, RoomNumber = hotelRoom.RoomNumber, PetFriendly = hotelRoom.PetFriendly, Rate = hotelRoom.Rate, Room = hotelRoom.Room, Hotel = hotelRoom.Hotel }, hotelRoom);
+            return Ok(await _HotelRoom.CreateHotelRoom(hotelRoom));
         }
 
 
         // DELETE: api/HotelRooms/5
-        [HttpDelete("{id}")]
-        [Route("Hotels/{hotelId}/Rooms/{roomNumber}")]
+        [HttpDelete("{roomNumber}")]
         public async Task<ActionResult<HotelRoom>> DeleteHotelRoom(int hotelid, int roomNumber)
         {
             await _HotelRoom.DeleteHotelRoom(hotelid, roomNumber);
             return NoContent();
         }
 
-        //adds a room to a hotel
-        [HttpPost]
-        [Route("Hotels/{hotelId}/Rooms")]
-        public async Task<IActionResult> AddRoomToHotel(int hotelId, int roomId)
-        {
-            await _HotelRoom.AddRoomToHotel(hotelId, roomId);
-            await _HotelRoom.AddRoomToHotel(hotelId, roomId);
-            return NoContent();
-        }
-        //removes a room from a hotel
-        [HttpDelete]
-        [Route("Hotels/{hotelId}/Rooms/{roomNumber}")]
-        public async Task<IActionResult> DeleteRoomFromHotel(int roomNumber, int hotelId)
-        {
-            await _HotelRoom.RemoveRoomFromHotel(roomNumber, hotelId);
-            return NoContent();
-        }
+      
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Hotel_management_system.Data;
+using Hotel_management_system.Models.DTOs;
 using Hotel_management_system.Models.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -16,23 +17,19 @@ namespace Hotel_management_system.Models.Services
         {
             _context = context;
         }
-        public async Task AddRoomToHotel(int roomId, int hotelId)
+       
+        
+        public async Task<HotelRoomDTO> CreateHotelRoom(HotelRoomDTO hotelRoom)
         {
-            HotelRoom HotelRoom = new HotelRoom()
+            HotelRoom newHotelRoom = new HotelRoom
             {
-                RoomID = roomId,
-                HotelID = hotelId,
-                Room = await _context.Rooms.FirstOrDefaultAsync(r => r.ID == roomId),
-                Hotel = await _context.Hotels.FirstOrDefaultAsync(h => h.ID == hotelId)
-
+                HotelID = hotelRoom.HotelID,
+                RoomNumber = hotelRoom.RoomNumber,
+                Rate = hotelRoom.Rate,
+                PetFriendly = hotelRoom.PetFriendly,
+                RoomID = hotelRoom.RoomID
             };
-
-            _context.Entry(HotelRoom).State = EntityState.Added;
-            await _context.SaveChangesAsync();
-        }
-        public async Task<HotelRoom> CreateHotelRoom(HotelRoom hotelRoom)
-        {
-            _context.Entry(hotelRoom).State = EntityState.Added;
+            _context.Entry(newHotelRoom).State = EntityState.Added;
             await _context.SaveChangesAsync();
             return hotelRoom;
 
@@ -40,38 +37,74 @@ namespace Hotel_management_system.Models.Services
 
         public async Task DeleteHotelRoom(int hotelId, int roomNumber)
         {
-            HotelRoom HotelRoom = await GetHotelRoom(hotelId, roomNumber);
+            HotelRoom HotelRoom = await _context.HotelRooms.FindAsync(hotelId, roomNumber);
             _context.Entry(HotelRoom).State = EntityState.Deleted;
             await _context.SaveChangesAsync();
         }
 
-        public async Task<HotelRoom> GetHotelRoom(int hotelId, int roomNumber)
+        public async Task<HotelRoomDTO> GetHotelRoom(int hotelId, int roomNumber)
         {
-            return await _context.HotelRooms
-                                .Where(h => h.HotelID == hotelId && h.RoomNumber == roomNumber)
-                                .FirstOrDefaultAsync();
+            return await _context.HotelRooms.Select(hr => new HotelRoomDTO()
+            {
+                HotelID = hr.HotelID,
+                RoomNumber = hr.RoomNumber,
+                Rate = hr.Rate,
+                PetFriendly = hr.PetFriendly,
+                RoomID = hr.RoomID,
+                Room = new RoomDTO()
+                {
+                    ID = hr.Room.ID,
+                    Name = hr.Room.Name,
+                    Layout = hr.Room.Layout,
+                    Amenities = hr.Room.RoomAmenities
+                 .Select(ra => new AmenityDTO()
+                 {
+                     ID = ra.Amenities.ID,
+                     Name = ra.Amenities.Name
+                 }).ToList()
+                }
+            }).FirstOrDefaultAsync(x => x.HotelID == hotelId && x.RoomNumber == roomNumber);
         }
 
-        public async Task<List<HotelRoom>> GetHotelRooms(int hotelId)
+        public async Task<List<HotelRoomDTO>> GetHotelRooms()
         {
-            return await _context.HotelRooms
-                                 .Where(h => h.HotelID == hotelId)
-                                 .ToListAsync();
+            return await _context.HotelRooms.Select(hr => new HotelRoomDTO()
+            {
+                HotelID = hr.HotelID,
+                RoomNumber = hr.RoomNumber,
+                Rate = hr.Rate,
+                PetFriendly = hr.PetFriendly,
+                RoomID = hr.RoomID,
+                Room = new RoomDTO()
+                {
+                    ID = hr.Room.ID,
+                    Name = hr.Room.Name,
+                    Layout = hr.Room.Layout,
+                    Amenities = hr.Room.RoomAmenities
+                 .Select(ra => new AmenityDTO()
+                 {
+                     ID = ra.Amenities.ID,
+                     Name = ra.Amenities.Name
+                 }).ToList()
+                }
+            }).ToListAsync();
+                               
         }
 
-        public async Task<HotelRoom> UpdateHotelRoom(HotelRoom hotelRoom)
+        public async Task<HotelRoomDTO> UpdateHotelRoom(HotelRoomDTO hotelRoom)
         {
-            _context.Entry(hotelRoom).State = EntityState.Modified;
+            HotelRoom updateHotelRoom = new HotelRoom
+            {
+                HotelID = hotelRoom.HotelID,
+                RoomNumber = hotelRoom.RoomNumber,
+                Rate = hotelRoom.Rate,
+                PetFriendly = hotelRoom.PetFriendly,
+                RoomID = hotelRoom.RoomID
+            };
+            _context.Entry(updateHotelRoom).State = EntityState.Modified;
             await _context.SaveChangesAsync();
             return hotelRoom;
         }
-        public async Task RemoveRoomFromHotel(int roomNumber, int hotelId)
-        {
-            var result = await _context.HotelRooms.FirstOrDefaultAsync(x => x.RoomNumber == roomNumber && x.HotelID == hotelId);
-
-            _context.Entry(result).State = EntityState.Deleted;
-
-            await _context.SaveChangesAsync();
-        }
+        
     }
 }
