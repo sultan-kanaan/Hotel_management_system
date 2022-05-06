@@ -105,6 +105,23 @@ namespace Hotel_management_system.Models.Services
             await _context.SaveChangesAsync();
             return hotelRoom;
         }
-        
+        public async Task AddRoomToHotel(int roomId, int hotelId, int roomNumber, decimal rate, bool petFriendly)
+        {
+            HotelRoom HotelRoom = new HotelRoom()
+            {
+                RoomID = roomId,
+                HotelID = hotelId,
+                RoomNumber = roomNumber,
+                Rate = rate,
+                PetFriendly = petFriendly,
+                Room = await _context.Rooms.FirstOrDefaultAsync(r => r.ID == roomId),
+                Hotel = await _context.Hotels.FirstOrDefaultAsync(h => h.ID == hotelId)
+
+            };
+
+            _context.Entry(HotelRoom).State = EntityState.Added;
+            await _context.SaveChangesAsync();
+        }
+
     }
 }

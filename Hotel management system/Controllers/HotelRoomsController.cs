@@ -74,7 +74,14 @@ namespace Hotel_management_system.Controllers
             await _HotelRoom.DeleteHotelRoom(hotelid, roomNumber);
             return NoContent();
         }
+        [HttpPost("{roomNumber}")]
+        public async Task<IActionResult> AddRoomToHotel(int hotelId, int roomId, int roomNumber, decimal rate, bool petFriendly)
+        {
+            await _HotelRoom.AddRoomToHotel(hotelId, roomId, roomNumber, rate, petFriendly);
+            await _HotelRoom.AddRoomToHotel(hotelId, roomId, roomNumber, rate, petFriendly);
+            return NoContent();
+        }
 
-      
+
     }
 }
