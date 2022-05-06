@@ -1,9 +1,11 @@
 using Hotel_management_system.Data;
+using Hotel_management_system.Models;
 using Hotel_management_system.Models.Interfaces;
 using Hotel_management_system.Models.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -30,22 +32,33 @@ namespace Hotel_management_system
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            
-            services.AddMvc();
-            
-            services.AddControllers();
-            services.AddTransient<IHotel, HotelRepository>();
-            services.AddTransient<IRoom, RoomRepository>();
-            services.AddTransient<IAmenity, AmenityRepository>();
-            services.AddTransient<IHotelRoom, HotelRoomRepository>();
+            services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+            {
+                options.User.RequireUniqueEmail = true;
+                // There are other options like this
+            })
+              .AddEntityFrameworkStores<AsyncInnDbContext>();
+            services.AddTransient<IUserService, IdentityUserService>();
 
-            
+
             services.AddDbContext<AsyncInnDbContext>(options =>
             {
                 // Our DATABASE_URL from js days
                 string connectionString = Configuration.GetConnectionString("DefaultConnection");
                 options.UseSqlServer(connectionString);
             });
+
+            services.AddMvc();
+
+            services.AddControllers();
+            services.AddTransient<IHotel, HotelRepository>();
+            services.AddTransient<IRoom, RoomRepository>();
+            services.AddTransient<IAmenity, AmenityRepository>();
+            services.AddTransient<IHotelRoom, HotelRoomRepository>();
+            services.AddTransient<IUserService, IdentityUserService>();
+
+
+
             services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("V1", new OpenApiInfo()
@@ -81,12 +94,6 @@ namespace Hotel_management_system
                 endpoints.MapGet("/", async context =>
                 {
                     await context.Response.WriteAsync("Hello World!");
-                });
-
-                endpoints.MapGet("/hey", async context =>
-                {
-                    await context.Response.WriteAsync("hey World!");
-                    //throw new InvalidOperationException("booyah");
                 });
             });
         }

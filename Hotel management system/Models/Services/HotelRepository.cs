@@ -13,10 +13,12 @@ namespace Hotel_management_system.Models.Services
 
     {
         private readonly AsyncInnDbContext _context;
+        private readonly IHotelRoom _hotelRoom;
 
-        public HotelRepository(AsyncInnDbContext context)
+        public HotelRepository(AsyncInnDbContext context, IHotelRoom hotelRoom)
         {
             _context = context;
+            _hotelRoom= hotelRoom;
         }
         public async Task<HotelDTO> CreateHotel(HotelDTO hotel)
         {
@@ -31,7 +33,15 @@ namespace Hotel_management_system.Models.Services
             };
             _context.Entry(newHotel).State = EntityState.Added;
             await _context.SaveChangesAsync();
-            return hotel;
+
+            //Course course = await _courses.GetCourseByCode(newStudent.CourseCode);
+            //await _courses.AddStudentToCourse(course.Id, createdStudent.Id);
+
+            //Room room = await _room.AddAmenityToRoom(hotel.ID,);
+
+            //HotelRoom hotelRoom = await _hotelRoom.AddRoomToHotel(hotelRoom.RoomID,hotelRoom.HotelID,hotelRoom.RoomNumber,hotelRoom.Rate,hotelRoom.PetFriendly);
+            HotelDTO NewhotelDTO = await GetHotel(newHotel.ID);
+            return NewhotelDTO;
         }
 
         public async Task DeleteHotel(int Id)
