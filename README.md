@@ -13,10 +13,27 @@
  
  Lab 16: Data Transfer Objects (DTOs) _ 27-4-2022
 
+ Lab 18: Identity _3-5-2022
+
+
 
 
 
 ---
+
+## Identity :
+ASP.NET Core Identity was created to help with the security and management of users. It provides this abstraction layer between the application and the users/role data. We can use the API in it’s entirety, or just bits and pieces as we need (such as the salting/hashing by itself) or email services. There is a lot of flexibility within ASP.NET Core Identity. We have the ability to take or leave whatever we want. Identity combines well with EFCore and SQL Server.
+
+
+## Register User :
+
+![](./assets/Regester.png)
+
+## Login Users :
+
+![](./assets/Login.png)
+
+
 ## architecture :
 
 * in This projetct i have 3 model (Hotels, Rooms, and Amenities).
@@ -27,6 +44,10 @@
 
 ---
  # API Routes
+
+## Users :
+
+![](./assets/Users.png)
  
 ## Hotel Routes :
 
