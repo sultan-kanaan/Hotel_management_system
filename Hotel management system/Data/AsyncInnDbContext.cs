@@ -4,10 +4,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Hotel_management_system.Models.DTOs;
 
 namespace Hotel_management_system.Data
 {
-    public class AsyncInnDbContext : DbContext
+    public class AsyncInnDbContext : IdentityDbContext<ApplicationUser>
     {
         public AsyncInnDbContext(DbContextOptions<AsyncInnDbContext> options) : base(options)
         {
@@ -25,6 +27,7 @@ namespace Hotel_management_system.Data
        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
            
 
 
@@ -50,6 +53,10 @@ namespace Hotel_management_system.Data
 
             modelBuilder.Entity<HotelRoom>()
                         .HasKey(HotelRoomNumber => new { HotelRoomNumber.HotelID, HotelRoomNumber.RoomNumber });
+
         }
+
+       
+        public DbSet<Hotel_management_system.Models.DTOs.UserDTO> UserDTO { get; set; }
     }
 }
