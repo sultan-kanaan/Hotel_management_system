@@ -122,6 +122,14 @@ namespace Hotel_management_system.Models.Services
             _context.Entry(HotelRoom).State = EntityState.Added;
             await _context.SaveChangesAsync();
         }
+        public async Task RemoveRoomFromHotel(int roomNumber, int hotelId)
+        {
+            var result = await _context.HotelRooms.FirstOrDefaultAsync(x => x.RoomNumber == roomNumber && x.HotelID == hotelId);
+
+            _context.Entry(result).State = EntityState.Deleted;
+
+            await _context.SaveChangesAsync();
+        }
 
     }
 }

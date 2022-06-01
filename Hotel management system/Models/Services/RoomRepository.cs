@@ -103,11 +103,12 @@ namespace Room_management_system.Models.Services
 
         public async Task RemoveAmentityFromRoom(int roomId, int amenityId)
         {
-            var removeAmentity = _context.RoomAmenities.FirstOrDefaultAsync(x => x.RoomID == roomId && x.AmenitiesID == amenityId);
+            RoomAmenities removeAmentity = await _context.RoomAmenities.Where(x => x.RoomID == roomId && x.AmenitiesID == amenityId).FirstAsync();
 
             _context.Entry(removeAmentity).State = EntityState.Deleted;
 
             await _context.SaveChangesAsync();
+           
         }
     }
 }

@@ -9,12 +9,12 @@ using Hotel_management_system.Data;
 using Hotel_management_system.Models;
 using Hotel_management_system.Models.Interfaces;
 using Hotel_management_system.Models.DTOs;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Hotel_management_system.Controllers
 {
     [Produces("application/json")]
-    //[Route("api/[controller]")]
-    [Route("/api/Hotels/{hotelId}/Rooms")]
+    [Route("api/[controller]")]
     [ApiController]
     public class HotelRoomsController : ControllerBase
     {
@@ -27,6 +27,7 @@ namespace Hotel_management_system.Controllers
 
         // GET: api/HotelRooms
         [HttpGet]
+        [AllowAnonymous]
         public async Task<ActionResult<HotelRoomDTO>> GetHotelRoom()
         {
             return Ok(await _HotelRoom.GetHotelRooms());
@@ -36,6 +37,7 @@ namespace Hotel_management_system.Controllers
 
         // GET: api/HotelRooms/5
         [HttpGet("{roomNumber}")]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<HotelRoomDTO>>> GetHotelRooms(int hotelId, int roomNumber)
         {
             var hotelroom = await _HotelRoom.GetHotelRoom(hotelId, roomNumber);
@@ -51,6 +53,7 @@ namespace Hotel_management_system.Controllers
         // PUT: api/HotelRooms/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{roomNumber}")]
+        [Authorize(Policy = "Update HotelRooms")]
         public async Task<IActionResult> PutHotelRoom(HotelRoomDTO hotelRoom)
         {
 
@@ -61,6 +64,7 @@ namespace Hotel_management_system.Controllers
         // POST: api/HotelRooms
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
+        [Authorize(Policy = "Create HotelRooms")]
         public async Task<ActionResult<HotelRoomDTO>> PostHotelRoom(HotelRoomDTO hotelRoom)
         {
             return Ok(await _HotelRoom.CreateHotelRoom(hotelRoom));
@@ -69,19 +73,27 @@ namespace Hotel_management_system.Controllers
 
         // DELETE: api/HotelRooms/5
         [HttpDelete("{roomNumber}")]
+        [Authorize(Policy = "Delete HotelRooms")]
         public async Task<ActionResult<HotelRoom>> DeleteHotelRoom(int hotelid, int roomNumber)
         {
             await _HotelRoom.DeleteHotelRoom(hotelid, roomNumber);
             return NoContent();
         }
         [HttpPost("{roomNumber}")]
+        [Authorize(Policy = "Add Room To Hotel")]
         public async Task<IActionResult> AddRoomToHotel(int hotelId, int roomId, int roomNumber, decimal rate, bool petFriendly)
         {
             await _HotelRoom.AddRoomToHotel(hotelId, roomId, roomNumber, rate, petFriendly);
-            await _HotelRoom.AddRoomToHotel(hotelId, roomId, roomNumber, rate, petFriendly);
             return NoContent();
         }
-
+        [HttpDelete]
+        [Route("Hotels/{hotelId}/Rooms/{roomNumber}")]
+        [Authorize(Policy = "removes a room from a hotel")]
+        public async Task<IActionResult> DeleteRoomFromHotel(int roomNumber, int hotelId)
+        {
+            await _HotelRoom.RemoveRoomFromHotel(roomNumber, hotelId);
+            return NoContent();
+        }
 
     }
 }

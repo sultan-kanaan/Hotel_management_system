@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Hotel_management_system.Data;
 using Hotel_management_system.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Hotel_management_system.Controllers
 {
@@ -24,6 +25,7 @@ namespace Hotel_management_system.Controllers
 
         // GET: api/RoomAmenities
         [HttpGet]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<RoomAmenities>>> GetRoomAmenities()
         {
             return await _context.RoomAmenities.ToListAsync();
@@ -31,6 +33,7 @@ namespace Hotel_management_system.Controllers
 
         // GET: api/RoomAmenities/5
         [HttpGet("{id}")]
+        [AllowAnonymous]
         public async Task<ActionResult<RoomAmenities>> GetRoomAmenities(int id)
         {
             var roomAmenities = await _context.RoomAmenities.FindAsync(id);

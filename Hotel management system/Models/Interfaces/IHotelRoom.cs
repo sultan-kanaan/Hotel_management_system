@@ -15,6 +15,8 @@ namespace Hotel_management_system.Models.Interfaces
         Task DeleteHotelRoom(int hotelId, int roomNumber);
         Task AddRoomToHotel(int roomId, int hotelId, int roomNumber, decimal rate, bool petFriendly);
 
+        Task RemoveRoomFromHotel(int roomNumber, int hotelId);
+
 
 
     }

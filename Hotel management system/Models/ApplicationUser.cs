@@ -9,6 +9,6 @@ namespace Hotel_management_system.Models
 
     public class ApplicationUser : IdentityUser 
     {
-
+        // string Role { get; set; }
     }
 }

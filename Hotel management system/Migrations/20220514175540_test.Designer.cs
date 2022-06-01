@@ -4,19 +4,21 @@ using Hotel_management_system.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Hotel_management_system.Migrations
 {
     [DbContext(typeof(AsyncInnDbContext))]
-    partial class AsyncInnDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220514175540_test")]
+    partial class test
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.17")
+                .HasAnnotation("ProductVersion", "5.0.16")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("Hotel_management_system.Models.Amenity", b =>
@@ -125,9 +127,6 @@ namespace Hotel_management_system.Migrations
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Token")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Username")
                         .HasColumnType("nvarchar(max)");
@@ -292,36 +291,6 @@ namespace Hotel_management_system.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "district manager",
-                            ConcurrencyStamp = "00000000-0000-0000-0000-000000000000",
-                            Name = "District Manager",
-                            NormalizedName = "DISTRICT MANAGER"
-                        },
-                        new
-                        {
-                            Id = "propertymanager",
-                            ConcurrencyStamp = "00000000-0000-0000-0000-000000000000",
-                            Name = "PropertyManager",
-                            NormalizedName = "PROPERTYMANAGER"
-                        },
-                        new
-                        {
-                            Id = "agent",
-                            ConcurrencyStamp = "00000000-0000-0000-0000-000000000000",
-                            Name = "Agent",
-                            NormalizedName = "AGENT"
-                        },
-                        new
-                        {
-                            Id = "anonymous",
-                            ConcurrencyStamp = "00000000-0000-0000-0000-000000000000",
-                            Name = "Anonymous",
-                            NormalizedName = "ANONYMOUS"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -346,302 +315,6 @@ namespace Hotel_management_system.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetRoleClaims");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            ClaimType = "permissions",
-                            ClaimValue = "Create Hotel",
-                            RoleId = "district manager"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            ClaimType = "permissions",
-                            ClaimValue = "See Hotels",
-                            RoleId = "district manager"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            ClaimType = "permissions",
-                            ClaimValue = "Update Hotel",
-                            RoleId = "district manager"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            ClaimType = "permissions",
-                            ClaimValue = "Delete Hotel",
-                            RoleId = "district manager"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            ClaimType = "permissions",
-                            ClaimValue = "Create HotelRoom",
-                            RoleId = "district manager"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            ClaimType = "permissions",
-                            ClaimValue = "See HotelRooms",
-                            RoleId = "district manager"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            ClaimType = "permissions",
-                            ClaimValue = "Update HotelRooms",
-                            RoleId = "district manager"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            ClaimType = "permissions",
-                            ClaimValue = "Delete HotelRooms",
-                            RoleId = "district manager"
-                        },
-                        new
-                        {
-                            Id = 9,
-                            ClaimType = "permissions",
-                            ClaimValue = "Create Rooms",
-                            RoleId = "district manager"
-                        },
-                        new
-                        {
-                            Id = 10,
-                            ClaimType = "permissions",
-                            ClaimValue = "See Rooms",
-                            RoleId = "district manager"
-                        },
-                        new
-                        {
-                            Id = 11,
-                            ClaimType = "permissions",
-                            ClaimValue = "Update Rooms",
-                            RoleId = "district manager"
-                        },
-                        new
-                        {
-                            Id = 12,
-                            ClaimType = "permissions",
-                            ClaimValue = "Delete Rooms",
-                            RoleId = "district manager"
-                        },
-                        new
-                        {
-                            Id = 13,
-                            ClaimType = "permissions",
-                            ClaimValue = "Create Amenity",
-                            RoleId = "district manager"
-                        },
-                        new
-                        {
-                            Id = 14,
-                            ClaimType = "permissions",
-                            ClaimValue = "See Amenities",
-                            RoleId = "district manager"
-                        },
-                        new
-                        {
-                            Id = 15,
-                            ClaimType = "permissions",
-                            ClaimValue = "Add Amenity to Room",
-                            RoleId = "district manager"
-                        },
-                        new
-                        {
-                            Id = 16,
-                            ClaimType = "permissions",
-                            ClaimValue = "Delete Amenity From Room",
-                            RoleId = "district manager"
-                        },
-                        new
-                        {
-                            Id = 17,
-                            ClaimType = "permissions",
-                            ClaimValue = "Update Amenity",
-                            RoleId = "district manager"
-                        },
-                        new
-                        {
-                            Id = 18,
-                            ClaimType = "permissions",
-                            ClaimValue = "Delete Amenity",
-                            RoleId = "district manager"
-                        },
-                        new
-                        {
-                            Id = 19,
-                            ClaimType = "permissions",
-                            ClaimValue = "Create Account for District Manager",
-                            RoleId = "district manager"
-                        },
-                        new
-                        {
-                            Id = 20,
-                            ClaimType = "permissions",
-                            ClaimValue = "Create Account for Agent",
-                            RoleId = "district manager"
-                        },
-                        new
-                        {
-                            Id = 21,
-                            ClaimType = "permissions",
-                            ClaimValue = "Create Account for Property Manager",
-                            RoleId = "district manager"
-                        },
-                        new
-                        {
-                            Id = 22,
-                            ClaimType = "permissions",
-                            ClaimValue = "Create account for Anonymous User",
-                            RoleId = "district manager"
-                        },
-                        new
-                        {
-                            Id = 23,
-                            ClaimType = "permissions",
-                            ClaimValue = "Add Room to Hotel",
-                            RoleId = "district manager"
-                        },
-                        new
-                        {
-                            Id = 24,
-                            ClaimType = "permissions",
-                            ClaimValue = "See Hotels",
-                            RoleId = "propertymanager"
-                        },
-                        new
-                        {
-                            Id = 25,
-                            ClaimType = "permissions",
-                            ClaimValue = "Create HotelRoom",
-                            RoleId = "propertymanager"
-                        },
-                        new
-                        {
-                            Id = 26,
-                            ClaimType = "permissions",
-                            ClaimValue = "See HotelRooms",
-                            RoleId = "propertymanager"
-                        },
-                        new
-                        {
-                            Id = 27,
-                            ClaimType = "permissions",
-                            ClaimValue = "Update HotelRooms",
-                            RoleId = "propertymanager"
-                        },
-                        new
-                        {
-                            Id = 28,
-                            ClaimType = "permissions",
-                            ClaimValue = "See Rooms",
-                            RoleId = "propertymanager"
-                        },
-                        new
-                        {
-                            Id = 29,
-                            ClaimType = "permissions",
-                            ClaimValue = "See Amenities",
-                            RoleId = "propertymanager"
-                        },
-                        new
-                        {
-                            Id = 30,
-                            ClaimType = "permissions",
-                            ClaimValue = "Add Amenity to Room",
-                            RoleId = "propertymanager"
-                        },
-                        new
-                        {
-                            Id = 31,
-                            ClaimType = "permissions",
-                            ClaimValue = "Delete Amenity From Room",
-                            RoleId = "propertymanager"
-                        },
-                        new
-                        {
-                            Id = 32,
-                            ClaimType = "permissions",
-                            ClaimValue = "Update Amenity",
-                            RoleId = "propertymanager"
-                        },
-                        new
-                        {
-                            Id = 33,
-                            ClaimType = "permissions",
-                            ClaimValue = "Add Room to Hotel",
-                            RoleId = "propertymanager"
-                        },
-                        new
-                        {
-                            Id = 34,
-                            ClaimType = "permissions",
-                            ClaimValue = "See HotelRooms",
-                            RoleId = "agent"
-                        },
-                        new
-                        {
-                            Id = 35,
-                            ClaimType = "permissions",
-                            ClaimValue = "Update HotelRooms",
-                            RoleId = "agent"
-                        },
-                        new
-                        {
-                            Id = 36,
-                            ClaimType = "permissions",
-                            ClaimValue = "See Amenities",
-                            RoleId = "agent"
-                        },
-                        new
-                        {
-                            Id = 37,
-                            ClaimType = "permissions",
-                            ClaimValue = "Add Amenity to Room",
-                            RoleId = "agent"
-                        },
-                        new
-                        {
-                            Id = 38,
-                            ClaimType = "permissions",
-                            ClaimValue = "Delete Amenity From Room",
-                            RoleId = "agent"
-                        },
-                        new
-                        {
-                            Id = 39,
-                            ClaimType = "permissions",
-                            ClaimValue = "See Hotels",
-                            RoleId = "anonymous"
-                        },
-                        new
-                        {
-                            Id = 40,
-                            ClaimType = "permissions",
-                            ClaimValue = "See HotelRooms",
-                            RoleId = "anonymous"
-                        },
-                        new
-                        {
-                            Id = 41,
-                            ClaimType = "permissions",
-                            ClaimValue = "See Rooms",
-                            RoleId = "anonymous"
-                        },
-                        new
-                        {
-                            Id = 42,
-                            ClaimType = "permissions",
-                            ClaimValue = "See Amenities",
-                            RoleId = "anonymous"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>

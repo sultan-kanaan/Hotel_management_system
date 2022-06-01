@@ -9,6 +9,7 @@ using Hotel_management_system.Data;
 using Hotel_management_system.Models;
 using Hotel_management_system.Models.Interfaces;
 using Hotel_management_system.Models.DTOs;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Hotel_management_system.Controllers
 {
@@ -26,6 +27,8 @@ namespace Hotel_management_system.Controllers
 
         // GET: api/Amenities
         [HttpGet]
+       [Authorize(Policy = "See Amenities")]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<AmenityDTO>>> GetAmenities()
         {
             return Ok( await _amenity.GetAmenities());
@@ -33,6 +36,8 @@ namespace Hotel_management_system.Controllers
 
         // GET: api/Amenities/5
         [HttpGet("{id}")]
+        [Authorize(Roles = "See_Amenities")]
+        [AllowAnonymous]
         public async Task<ActionResult<AmenityDTO>> GetAmenity(int id)
         {
             var amenity = await _amenity.GetAmenity(id);
@@ -48,6 +53,7 @@ namespace Hotel_management_system.Controllers
         // PUT: api/Amenities/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
+        [Authorize(Policy = "Update Amenity")]
         public async Task<IActionResult> PutAmenity(int id, AmenityDTO amenity)
         {
             if (id != amenity.ID)
@@ -61,6 +67,7 @@ namespace Hotel_management_system.Controllers
         // POST: api/Amenities
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
+        [Authorize(Policy = "Create Amenity")]
         public async Task<ActionResult<AmenityDTO>> PostAmenity(AmenityDTO amenity)
         {
             await _amenity.CreateAmenity(amenity);
@@ -69,6 +76,7 @@ namespace Hotel_management_system.Controllers
 
         // DELETE: api/Amenities/5
         [HttpDelete("{id}")]
+        [Authorize(Policy = "Delete Amenity")]
         public async Task<IActionResult> DeleteAmenity(int id)
         {
             await _amenity.DeleteAmenity(id);

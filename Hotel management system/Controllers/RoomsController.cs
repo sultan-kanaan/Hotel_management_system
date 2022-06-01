@@ -9,6 +9,7 @@ using Hotel_management_system.Data;
 using Hotel_management_system.Models;
 using Hotel_management_system.Models.Interfaces;
 using Hotel_management_system.Models.DTOs;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Hotel_management_system.Controllers
 {
@@ -26,6 +27,7 @@ namespace Hotel_management_system.Controllers
 
         // GET: api/Rooms
         [HttpGet]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<RoomDTO>>> GetRooms()
         {
             return Ok(await _room.GetRooms());
@@ -33,6 +35,7 @@ namespace Hotel_management_system.Controllers
 
         // GET: api/Rooms/5
         [HttpGet("{id}")]
+        [AllowAnonymous]
         public async Task<ActionResult<RoomDTO>> GetRoom(int id)
         {
             var room = await _room.GetRoom(id);
@@ -44,6 +47,7 @@ namespace Hotel_management_system.Controllers
         // PUT: api/Rooms/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
+        [Authorize(Policy = "Update Rooms")]
         public async Task<IActionResult> PutRoom(int id, RoomDTO room)
         {
             if (id != room.ID)
@@ -58,6 +62,7 @@ namespace Hotel_management_system.Controllers
         // POST: api/Rooms
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
+        [Authorize(Policy = "Create Rooms")]
         public async Task<ActionResult<RoomDTO>> PostRoom(RoomDTO room)
         {
             await _room.CreateRoom(room);
@@ -66,6 +71,7 @@ namespace Hotel_management_system.Controllers
 
         // DELETE: api/Rooms/5
         [HttpDelete("{id}")]
+        [Authorize(Policy = "Delete Rooms")]
         public async Task<IActionResult> DeleteRoom(int id)
         {
             await _room.DeleteRoom(id);
@@ -74,6 +80,7 @@ namespace Hotel_management_system.Controllers
         //Adds an amenity to a room
         [HttpPost]
         [Route("{roomId}/Amenity/{amenityId}")]
+        [Authorize(Policy = "Add Amenity to Room")]
         public async Task<IActionResult> AddAmenityToRoom(int roomId, int amenityId)
         {
             await _room.AddAmenityToRoom(roomId, amenityId);
@@ -82,6 +89,7 @@ namespace Hotel_management_system.Controllers
         //removes an amenity from a room
         [HttpDelete]
         [Route("{roomId}/{amenityId}")]
+        [Authorize(Policy = "Delete Amenity From Room")]
         public async Task<IActionResult> DeleteAmenityFromRoom(int roomId, int amenityId)
         {
             await _room.RemoveAmentityFromRoom(roomId, amenityId);

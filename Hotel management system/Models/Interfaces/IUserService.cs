@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Hotel_management_system.Models.Interfaces
@@ -14,5 +15,8 @@ namespace Hotel_management_system.Models.Interfaces
 
         //public Task<UserDTO> Authenticate(string username, string password);
         public Task<UserDTO> Authenticate(LoginDataDTO data);
+
+        public Task<UserDTO> GetUser(ClaimsPrincipal user);
+
     }
 }
